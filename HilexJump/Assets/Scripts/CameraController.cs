@@ -21,8 +21,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float rotationSpeed = 90f; // degrees per second when rotating
 
-    float offsetCameraY = 6.5f; // Offset for the camera's Y position
-
     [SerializeField]
     float cameraMoveDuration = 0.5f; // duration of smooth camera move in seconds
 
@@ -34,36 +32,57 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        moveInput = inputActions.FindAction("Move");
-        moveInput.Enable();
-
-        // Update currentMove when the action is performed. Supports both Vector2 and single-axis (float) bindings.
-        moveInput.performed += ctx =>
+        if (inputActions != null)
         {
-            if (ctx.control != null && ctx.control.valueType == typeof(float))
+            moveInput = inputActions.FindAction("Move");
+            if (moveInput != null)
             {
-                currentMove = new Vector2(ctx.ReadValue<float>(), 0f);
+                moveInput.Enable();
+                moveInput.performed += ctx =>
+                {
+                    if (ctx.control != null && ctx.control.valueType == typeof(float))
+                    {
+                        currentMove = new Vector2(ctx.ReadValue<float>(), 0f);
+                    }
+                    else
+                    {
+                        currentMove = ctx.ReadValue<Vector2>();
+                    }
+                };
+                moveInput.canceled += _ => currentMove = Vector2.zero;
             }
-            else
-            {
-                currentMove = ctx.ReadValue<Vector2>();
-            }
-        };
-        moveInput.canceled += _ => currentMove = Vector2.zero;
+        }
 
-        //appel de la fonction MoveCamera() pour que la caméra suive la balle quand le score change
+        // appel de la fonction MoveCamera() pour que la caméra suive la balle quand le score change
         GameManager.onScoreChanged.AddListener(_ => MoveCamera());
+
+        // Disable input when finish is triggered
+        if (TriggerFinish.onFinishTriggered != null)
+        {
+            TriggerFinish.onFinishTriggered.AddListener(OnFinishTriggered);
+        }
     }
 
 
     private void OnDisable()
     {
-        moveInput.Disable();
+        if (moveInput != null)
+        {
+            moveInput.Disable();
+        }
+
+        if (TriggerFinish.onFinishTriggered != null)
+        {
+            TriggerFinish.onFinishTriggered.RemoveListener(OnFinishTriggered);
+        }
     }
 
     private void OnEnable()
     {
-        moveInput.Enable();
+        if (moveInput != null)
+        {
+            moveInput.Enable();
+        }
     }
 
     // Update is called once per frame
@@ -89,6 +108,15 @@ public class CameraController : MonoBehaviour
             StopCoroutine(cameraMoveCoroutine);
         }
         cameraMoveCoroutine = StartCoroutine(SmoothMoveCamera());
+    }
+
+    void OnFinishTriggered()
+    {
+        currentMove = Vector2.zero;
+        if (moveInput != null)
+        {
+            moveInput.Disable();
+        }
     }
 
     System.Collections.IEnumerator SmoothMoveCamera()

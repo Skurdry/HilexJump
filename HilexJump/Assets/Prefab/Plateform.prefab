@@ -137,6 +137,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 9e02ddfa7414e574cb3d2a4a3165d380, type: 3}
       insertIndex: -1
       addedObject: {fileID: 91053341184195722}
+    - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 9e02ddfa7414e574cb3d2a4a3165d380, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6618125053097701603}
   m_SourcePrefab: {fileID: 100100000, guid: 9e02ddfa7414e574cb3d2a4a3165d380, type: 3}
 --- !u!1 &39275305593960974 stripped
 GameObject:
@@ -187,3 +190,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676d1cb42c89fcd41a590c4c2d80c0ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Plateform
+--- !u!1 &8821897107886450284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8513859187771203891, guid: 9e02ddfa7414e574cb3d2a4a3165d380, type: 3}
+  m_PrefabInstance: {fileID: 885768213555726175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6618125053097701603
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821897107886450284}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7387706064836869012, guid: 9e02ddfa7414e574cb3d2a4a3165d380, type: 3}

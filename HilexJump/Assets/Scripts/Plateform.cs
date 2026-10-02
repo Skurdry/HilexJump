@@ -6,7 +6,9 @@ public class Plateform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 4f, ForceMode.Impulse);
+
+            GameManager.Instance.ResetCombo();
         }
     }
 }

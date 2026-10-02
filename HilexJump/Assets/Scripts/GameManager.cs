@@ -6,8 +6,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int score = 0;
 
+    [SerializeField]
+    int combo = 1;
+
     //Event to notify when the score changes
     public static UnityEngine.Events.UnityEvent<int> onScoreChanged;
+    public static UnityEngine.Events.UnityEvent<int> onComboChanged;
 
     public static GameManager Instance;
 
@@ -16,6 +20,10 @@ public class GameManager : MonoBehaviour
         if (onScoreChanged == null)
         {
             onScoreChanged = new UnityEngine.Events.UnityEvent<int>();
+        }
+        if (onComboChanged == null)
+        {
+            onComboChanged = new UnityEngine.Events.UnityEvent<int>();
         }
 
         if (Instance == null)
@@ -37,8 +45,20 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseScore()
     {
-        score++;
+        IncreaseCombo();
+        score += 10 * combo;
         onScoreChanged?.Invoke(score);
-        Debug.Log("Score: " + score);
+    }
+
+    public void IncreaseCombo()
+    {
+        combo++;
+        onComboChanged?.Invoke(combo);
+    }
+
+    public void ResetCombo()
+    {
+        combo = 0;
+        onComboChanged?.Invoke(combo);
     }
 }

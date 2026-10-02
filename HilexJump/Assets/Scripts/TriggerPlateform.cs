@@ -20,7 +20,7 @@ public class TriggerPlateform : MonoBehaviour
     //coroutine to destroy the platform after a certain time
     IEnumerator DestroyPlateform()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.2f);
         Destroy(plateform);
     }
     
